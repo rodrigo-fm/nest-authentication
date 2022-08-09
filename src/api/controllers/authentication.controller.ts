@@ -1,12 +1,18 @@
-import { Body, Controller, Post, Put } from "@nestjs/common";
+import { Body, Controller, Inject, Post, Put } from "@nestjs/common";
+import { ILoginUseCase } from "src/domain/usecases";
 import { CreateAccountRequest, LoginRequest } from "../DTOs";
+import LoginUseCase from "../usecases/login.usecase";
 
 @Controller("authentication")
 export default class AuthenticationController {
 
+    constructor(
+        @Inject(LoginUseCase.className) private loginUseCase: ILoginUseCase
+    ) {}
+
     @Post("login")
-    login(@Body() loginRequest: LoginRequest): LoginRequest {
-        return loginRequest;
+    async login(@Body() loginRequest: LoginRequest): Promise<string> {
+        return await this.loginUseCase.handle(loginRequest.email, loginRequest.password);
     }
 
     @Post("register")

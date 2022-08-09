@@ -1,13 +1,22 @@
-import { Controller, Get, Param } from "@nestjs/common";
+import { Controller, Get, Param, Query } from "@nestjs/common";
+import { SearchUserRequest } from "../DTOs";
 
 @Controller("user")
 export default class UserController {
 
-    @Get(":id")
+    @Get()
+    getAll(): string {
+        return "get all users route";
+    }
+
+    @Get("search")
+    searchUser(@Query() query: SearchUserRequest): string {        
+        return "search user by: " + JSON.stringify(query);
+    }
+
+    @Get("find/:id")
     getUser(@Param("id") id: number): string {
-        // if(isNaN(id)) {
-        //     return "not a number!";
-        // }
         return `get user ${id} route`;
     }
-}   
+
+}
