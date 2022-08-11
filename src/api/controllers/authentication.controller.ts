@@ -6,14 +6,13 @@ import LoginUseCase from "../usecases/login.usecase";
 @Controller("authentication")
 export default class AuthenticationController {
 
-    // constructor(
-    //     @Inject(LoginUseCase.className) private loginUseCase: ILoginUseCase
-    // ) {}
+    constructor(
+        @Inject(LoginUseCase) private readonly loginUseCase: ILoginUseCase
+    ) {}
 
     @Post("login")
     async login(@Body() loginRequest: LoginRequest): Promise<string> {
-        return Promise.resolve("testing login");
-        // return await this.loginUseCase.handle(loginRequest.email, loginRequest.password);
+        return await this.loginUseCase.handle(loginRequest.email, loginRequest.password);
     }
 
     @Post("register")

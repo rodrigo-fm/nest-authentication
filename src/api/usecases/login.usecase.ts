@@ -6,7 +6,7 @@ export default class LoginUseCase implements ILoginUseCase {
     
     static className: string = 'LoginUseCase';
 
-    handle = async (email: string, password: string): Promise<string> => {
+    async handle (email: string, password: string): Promise<string> {
         return Promise.resolve("login use case");
     }
 }
