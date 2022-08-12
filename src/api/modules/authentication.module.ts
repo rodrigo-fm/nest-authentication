@@ -1,12 +1,10 @@
 import { Module } from "@nestjs/common";
-// import { TypeOrmModule } from "@nestjs/typeorm";
-// import { User } from "src/domain/entities";
 import AuthenticationController from "../controllers/authentication.controller";
-import LoginUseCase from "../usecases/login.usecase";
+import { CreateAccountUseCase, LoginUseCase } from "../usecases";
 
 @Module({
   imports: [],
   controllers: [AuthenticationController],
-  providers: [LoginUseCase],
+  providers: [LoginUseCase, CreateAccountUseCase],
 })
 export class AuthenticationModule {}

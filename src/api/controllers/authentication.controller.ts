@@ -1,13 +1,15 @@
 import { Body, Controller, Inject, Post, Put } from "@nestjs/common";
-import { ILoginUseCase } from "src/domain/usecases";
+import { ICreateAccountUseCase, ILoginUseCase } from "src/domain/usecases";
 import { CreateAccountRequest, LoginRequest } from "../DTOs";
+import { CreateAccountUseCase } from "../usecases";
 import LoginUseCase from "../usecases/login.usecase";
 
 @Controller("authentication")
 export default class AuthenticationController {
 
     constructor(
-        @Inject(LoginUseCase) private readonly loginUseCase: ILoginUseCase
+        @Inject(LoginUseCase) private readonly loginUseCase: ILoginUseCase,
+        @Inject(CreateAccountUseCase) private readonly createAccountUseCase: ICreateAccountUseCase,
     ) {}
 
     @Post("login")
@@ -16,8 +18,8 @@ export default class AuthenticationController {
     }
 
     @Post("register")
-    createAccount(@Body() createAccountRequest: CreateAccountRequest): string {
-        return "create account route";
+    async createAccount(@Body() createAccountRequest: CreateAccountRequest): Promise<string> {
+        return await this.createAccountUseCase.handle({...createAccountRequest});
     }
 
     @Put("change-password")

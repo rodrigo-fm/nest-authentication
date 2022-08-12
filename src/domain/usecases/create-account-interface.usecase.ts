@@ -2,11 +2,12 @@
 export interface CreateAccountParams {
     name: string;
     email: string;
-    passsword: string;
+    password: string;
+    confirmPassword: string;
 }
 
 // add return interface
 
 export default interface ICreateAccountUseCase {
-    handle(params: CreateAccountParams): Promise<void>;
+    handle(params: CreateAccountParams): Promise<string>;
 }
